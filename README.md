@@ -3,6 +3,7 @@ This Repo contains oAuth Base for Germaneness Apps
 
 
 The Application can be added using following curl
+
 POST /api/v1/token HTTP/1.1
 Host: localhost:3002
 Content-Type: application/x-www-form-urlencoded
@@ -12,6 +13,7 @@ Postman-Token: fd7eb567-fdd4-42cb-9512-d32e87313a77
 grant_type=passwordusername=xxx.xxxxpassword=xxxx.xxxxscope=OpenIdundefined=undefined
 
 The user can be added by following curl
+
 POST /api/v1/users HTTP/1.1
 Host: localhost:3002
 Content-Type: application/json
@@ -25,6 +27,7 @@ Postman-Token: 2a6d3d68-60c2-477e-a5d2-bfb9179d6631
 
 
 The application can be added by following curl
+
 POST /api/v1/application? HTTP/1.1
 Host: localhost:3002
 Content-Type: application/json
