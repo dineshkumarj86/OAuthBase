@@ -45,8 +45,9 @@ class TokenHelper {
             return generateUserToken(app.AppId, userIdentity, this.subjectIssuer, this.audience, this.jwtlib,
               this.JWT_Secret, this.tokenRepo)
           }
+          console.log('Token Got Sucessfully, Going to verify Token')
           var decoded = this.jwtlib.verify(token[0].Access_Token, this.JWT_Secret);
-
+          console.log(decoded)
           if (decoded.exp <= decoded.iat) {
             return generateUserToken(app.AppId, userIdentity, this.subjectIssuer, this.audience, this.jwtlib,
               this.JWT_Secret, this.tokenRepo)
@@ -56,7 +57,7 @@ class TokenHelper {
         return null;
       } catch (err) {
         console.log(err)
-        return null
+        return null;
       }
 
     }
@@ -64,8 +65,10 @@ class TokenHelper {
 }
 
 async function generateUserToken(appId, userId, iss, aud, jwtlib, JWT_Secret, tokenRepo) {
-  let iat = Math.floor(Date.now())
-  let exp = iat + 3600000
+  let iat = Math.floor(Date.now() / 1000)
+  console.log(`Iat ${iat}`)
+  let exp = Math.floor((Date.now() + 3600000)/1000)
+  console.log(`Expiry ${exp}`)
   let new_token = {
     "sub": userId,
     "iss": iss,
@@ -97,8 +100,9 @@ async function generateUserToken(appId, userId, iss, aud, jwtlib, JWT_Secret, to
 async function generateAppToken(appId, iss, aud, jwtlib, JWT_Secret, tokenRepo) {
   console.log('Entered AppToken Generation')
 
-  let iat = Math.floor(Date.now())
-  let exp = iat + 3600000
+  let iat = Math.floor(Date.now() / 1000)
+  let exp = Math.floor((iat + 3600000)/1000)
+  console.log(`Expiry ${exp}`)
   let new_token = {
     "sub": appId,
     "iss": iss,
