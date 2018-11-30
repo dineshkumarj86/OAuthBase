@@ -46,13 +46,14 @@ class TokenHelper {
               this.JWT_Secret, this.tokenRepo)
           }
           console.log('Token Got Sucessfully, Going to verify Token')
-          var decoded = this.jwtlib.verify(token[0].Access_Token, this.JWT_Secret);
-          console.log(decoded)
-          if (decoded.exp <= decoded.iat) {
-            return generateUserToken(app.AppId, userIdentity, this.subjectIssuer, this.audience, this.jwtlib,
-              this.JWT_Secret, this.tokenRepo)
+          try{
+              var isVerified = this.jwtlib.verify(token[0].Access_Token, this.JWT_Secret)
           }
-          return token[0]
+          catch(error){
+            return generateUserToken(app.AppId, userIdentity, this.subjectIssuer, this.audience, this.jwtlib,
+                this.JWT_Secret, this.tokenRepo);
+          }
+          return token[0];
         }
         return null;
       } catch (err) {

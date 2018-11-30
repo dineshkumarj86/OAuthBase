@@ -31,6 +31,13 @@ app.use(bodyparser.urlencoded({
   extended: true,
 }));
 
+app.use(function(req, res, next) {
+  console.log('Inside CORS Header')
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", req.header('Access-Control-Request-Headers'));
+  next();
+});
+
 var connection = new mysqlconn({host: settings.HOST,
   user: settings.USER_NAME,
   password: settings.PASSWORD,

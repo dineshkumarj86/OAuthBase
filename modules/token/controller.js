@@ -8,6 +8,8 @@ function TokenController(grantTypesSupported, validationHandlers, handler, crypt
       return next()
     }
 
+    console.log(req.body)
+
     if (!req.body.hasOwnProperty('grant_type')) {
       res.status(400).send({
         error: 'Body should contain grant_type is Required'
