@@ -2,16 +2,20 @@
 const INSERT_USERS = `Insert Into Users Set ?`;
 const UPDATE_USERS = `UPDATE users SET ? WHERE UserID = :UserID`;
 const SELECT_USER_BY_USERID = 'Select * From Users Where UserId = ?';
-const SELECT_USER_BY_USERNAME = 'Select * From Users Where UserName = %s';
-const SELECT_USERID_BY_USERNAME = 'Select UserId From Users Where UserName = ?'
-const SELECT_USERS_BY_USERNAME_PASSWORD = 'Select UserId From Users Where UserName = ? and Password = ?'
+const SELECT_USER_BY_USERNAME = 'Select UserId From Users Where UserName = ? and isActive = 1';
+const SELECT_USER_BY_EMAIL = 'Select UserId From Users Where Email = ? and isActive = 1';
+const SELECT_USERID_BY_USERNAME = 'Select UserId From Users Where (UserName = ? Or Email = ?) and isActive = 1'
+const SELECT_USERS_BY_USERNAME_PASSWORD = 'Select UserId From Users Where (UserName = ? Or Email = ?) \
+                                            and Password = ? and isActive = 1'
+const SELECT_USER_BY_USERNAME_OR_EMAIL = 'Select UserId From Users Where (Email = ? Or UserName = ?) And isActive = 1';
+const SELECT_USER_BY_PHONE = 'Select UserId From Users Where PhoneNumber = ? and isActive = 1'
+
 //AppUsers Query
 const INSERT_APP_USERS = 'Insert Into app_user Set ?';
 const UPDATE_APP_USERS = 'UPDATE app_user Set ?';
 const SELECT_APP_USERS_BY_USERID_APPID = 'Select * From app_user Where UserId = ? And AppId = ?'
 const DELETE_APP_USERS_BY_USERID_APPID = 'Delete From app_user Where UserId = ? And AppId = ?'
-const SELECT_APP_BY_APPID_USERNAME = 'Select U.* From app_user AU Inner Join Users U ON \
-                                      U.UserId = AU.UserId Where U.UserName = ? And AU.AppId = ?'
+const SELECT_APP_BY_APPID_USERNAME = 'Select U.* From app_user AU Inner Join Users U ON U.UserId = AU.UserId Where U.UserName = ? And AU.AppId = ?'
 //Application Query
 const INSERT_APPLICATION = `Insert Into Application Set ?`;
 const SELECT_APPLICATION_BY_APPNAME = 'Select AppName From Application Where AppName = ?'
@@ -38,7 +42,9 @@ module.exports = {
         'SELECT_USER_BY_USERNAME': SELECT_USER_BY_USERNAME,
         'SELECT_USERID_BY_USERNAME': SELECT_USERID_BY_USERNAME,
         'SELECT_USERS_BY_USERNAME_PASSWORD': SELECT_USERS_BY_USERNAME_PASSWORD,
-
+        'SELECT_USER_BY_USERNAME_OR_EMAIL': SELECT_USER_BY_USERNAME_OR_EMAIL,
+        'SELECT_USER_BY_EMAIL': SELECT_USER_BY_EMAIL,
+        'SELECT_USER_BY_PHONE': SELECT_USER_BY_PHONE,
 
         //APPUsers
         'INSERT_APP_USERS': INSERT_APP_USERS,

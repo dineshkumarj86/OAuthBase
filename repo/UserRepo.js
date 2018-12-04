@@ -50,10 +50,32 @@ class UserRepo {
     })
   }
 
-  getUserByEmail(email) {
-    let query = util.format(constants.query.SELECT_USER_BY_USERNAME, `'${email}'`)
-    this.options.logger.log('debug', query)
-    var result = this.options.db.query(query)
+  getUserByEmail(Email) {
+    var result = this.options.db.query(constants.query.SELECT_USER_BY_EMAIL, [Email])
+    return new Promise(function(resolve, reject) {
+      result.then(function(data) {
+        resolve(data);
+      }).catch(function(err) {
+        console.log(err)
+        reject(err);
+      })
+    })
+  }
+
+  getUserByEmailAndUserName(email, userName){
+    var result = this.options.db.query(constants.query.SELECT_USER_BY_USERNAME_OR_EMAIL, [email, userName])
+    return new Promise(function(resolve, reject) {
+      result.then(function(data) {
+        resolve(data);
+      }).catch(function(err) {
+        console.log(err)
+        reject(err);
+      })
+    })
+  }
+
+  getUserIdByEmail(email) {
+    var result = this.options.db.query(constants.query.SELECT_USERID_BY_USERNAME, [email, email])
     return new Promise(function(resolve, reject) {
       result.then(function(data) {
         resolve(data);
@@ -62,10 +84,11 @@ class UserRepo {
         reject(err);
       })
     })
+    this.options.logger.log('debug', result.query)
   }
 
-  getUserIdByEmail(email) {
-    var result = this.options.db.query(constants.query.SELECT_USERID_BY_USERNAME, email)
+  getUserByPhoneNumber(phone){
+    var result = this.options.db.query(constants.query.SELECT_USER_BY_PHONE, [phone])
     return new Promise(function(resolve, reject) {
       result.then(function(data) {
         resolve(data);
@@ -78,7 +101,20 @@ class UserRepo {
   }
 
   getUserByEmailPassword(UserName, Password) {
-    var result = this.options.db.query(constants.query.SELECT_USERS_BY_USERNAME_PASSWORD, [email, password])
+    var result = this.options.db.query(constants.query.SELECT_USERS_BY_USERNAME_PASSWORD, [email, email, password])
+    return new Promise(function(resolve, reject) {
+      result.then(function(data) {
+        resolve(data);
+      }).catch(function(err) {
+        console.error(err)
+        reject(err);
+      })
+    })
+    this.options.logger.log('debug', result.query)
+  }
+
+  getUserByUserName(userName) {
+    var result = this.options.db.query(constants.query.SELECT_USER_BY_USERNAME, [userName])
     return new Promise(function(resolve, reject) {
       result.then(function(data) {
         resolve(data);
