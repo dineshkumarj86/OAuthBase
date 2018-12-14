@@ -16,6 +16,9 @@ Alter Table users Add PhoneNumber Varchar(10) Not Null, Add Email varchar(250) N
 Alter Table users Add isActive bit(1);
 Alter Table `germaneness_users`.`Users` ADD CONSTRAINT PhoneNumber UNIQUE (`PhoneNumber`);
 
+Update users Set IsActive = 1;
+Update users Set Email = UserName;
+
 
 CREATE TABLE `Germaneness_Users`.`Application` (
 	Id bigint AUTO_INCREMENT primary key,
