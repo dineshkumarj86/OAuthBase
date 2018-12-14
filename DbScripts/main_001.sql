@@ -6,12 +6,16 @@ use `Germaneness_Users`;
 CREATE TABLE `Germaneness_Users`.`Users` (
 	Id bigint AUTO_INCREMENT primary key,
     UserId varchar(65) NOT NULL,
-    UserName varchar(500) NOT NULL,
-    `Password` varchar(500) NOT NULL
+    UserName varchar(500),
+    `Password` varchar(500)
 );
 
 Alter Table `Germaneness_Users`.`Users` Add Constraint UK_UserName UNIQUE(UserName);
-Alter Table `Germaneness_Users`.`Users` Add Constraint UK_UserId UNIQUE(UserId);
+Alter Table `germaneness_users`.`Users` ADD CONSTRAINT UserId UNIQUE (`UserId`);
+Alter Table users Add PhoneNumber Varchar(10) Not Null, Add Email varchar(250) Not Null;
+Alter Table users Add isActive bit(1);
+Alter Table `germaneness_users`.`Users` ADD CONSTRAINT PhoneNumber UNIQUE (`PhoneNumber`);
+
 
 CREATE TABLE `Germaneness_Users`.`Application` (
 	Id bigint AUTO_INCREMENT primary key,
