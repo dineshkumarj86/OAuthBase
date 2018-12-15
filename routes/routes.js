@@ -16,7 +16,8 @@ function router(app, //1
   supportedGrantTypes, //12
   appValidator,
   tokenHelper,
-  validationHandlers) {
+  validationHandlers,
+  otpHelperObj) {
   this.app = app
   this.applicationRepo = applicationRepo
   this.passport = passport
@@ -32,6 +33,7 @@ function router(app, //1
   this.appValidator = appValidator
   this.tokenHelper = tokenHelper
   this.validationHandlers = validationHandlers
+  this.otpHelper = otpHelperObj
 }
 
 router.prototype.initroutes = function() {

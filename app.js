@@ -22,7 +22,8 @@ const express = require('express'),
       resourceOwnerGrantsValidator = require('./validation/resourceOwnerGrantsValidator')
       clientCredentialsGrantsValidator = require('./validation/clientCredentialsValidator'),
       jsonWebtoken = require('jsonwebtoken'),
-      tokenHelper = require('./helpers/tokenHelper');
+      tokenHelper = require('./helpers/tokenHelper')
+      otphelper = require('./helpers/otphelper');
 
 const app = new express()
 
@@ -88,10 +89,12 @@ settings.ValidationHandlers = {
 var tokenHelperObj = new tokenHelper(tokenRepo, jsonWebtoken, settings.JWT_Secret, userRepository, settings.ISS
                                       , settings.AUD)
 
+let otpHelperObj = new otphelper(6)
+
 var route = new routes(app, appRepo, passport, uuidGenerator, userRepository,
                       crypt,userValidatorObj,appUserRepository,tokenRepo, resourceOwnerValidator,
                       clientCredentialsValidator, settings.SUPPORTED_GRANT_TYPES, appValidationHandler,
-                    tokenHelperObj, settings.ValidationHandlers);
+                    tokenHelperObj, settings.ValidationHandlers, otpHelperObj);
 route.initroutes();
 
 const server = app.listen(settings.port, (error) => {
