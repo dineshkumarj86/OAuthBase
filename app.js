@@ -24,7 +24,6 @@ const express = require('express'),
       jsonWebtoken = require('jsonwebtoken'),
       tokenHelper = require('./helpers/tokenHelper'),
       otphelper = require('./helpers/otphelper'),
-      amazonQueueHelper = require('./helpers/queuehelper'),
       emailHelper = require('./helpers/emailHelper');
       emailTemplateRepo = require('./repo/AppEmailTemplate')
 
@@ -95,7 +94,6 @@ var tokenHelperObj = new tokenHelper(tokenRepo, jsonWebtoken, settings.JWT_Secre
 
 let otpHelperObj = new otphelper(6)
 
-let sqsHelper = new amazonQueueHelper(log, settings.ACCESSKEY, settings.ARN, settings.REGION)
 let emailHelperObj = new emailHelper(log, settings.ACCESSKEY, settings.REGION, settings.FROM_EMAIL)
 var emailTemplateRepo = new emailTemplateRepo({'db': mysqldb, 'logger': log})
 
