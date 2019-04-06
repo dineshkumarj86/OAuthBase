@@ -22,6 +22,7 @@
   },
   "homepage": "https://gitlab.com/dineshkumarj86/germaness-school#readme",
   "dependencies": {
+    "aws-sdk": "^2.382.0",
     "bcrypt": "^3.0.2",
     "body-parser": "^1.18.3",
     "esformatter": "^0.10.0",

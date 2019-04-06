@@ -3,12 +3,18 @@ const usersController = require('./controllers'),
 
 class userRoute{
   constructor(app, userRepo, passport, uuidHelper, cryptoHelper, validator,
-              appUserRepo){
+              appUserRepo, emailHelper, registeredUserEmailTemplateName, uuidGenerator, 
+              emailTemplateRepo){
     this.app = app
     this.userRepo = userRepo
     this.passport = passport
     this.userFilter = new usersFilter(cryptoHelper, uuidHelper)
-    this.domain = new usersController(userRepo, validator, appUserRepo)
+    this.domain = new usersController(userRepo
+                                      ,validator 
+                                      ,emailHelper 
+                                      ,emailTemplateRepo 
+                                      ,registeredUserEmailTemplateName
+                                      ,uuidHelper)
   }
 
   loadRoutes(basePath){

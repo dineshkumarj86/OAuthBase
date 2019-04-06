@@ -17,7 +17,10 @@ function router(app, //1
   appValidator,
   tokenHelper,
   validationHandlers,
-  otpHelperObj) {
+  otpHelperObj,
+  emailHelper,
+  registeredUserEmailTemplateName, 
+  emailTemplateRepo) {
   this.app = app
   this.applicationRepo = applicationRepo
   this.passport = passport
@@ -34,6 +37,9 @@ function router(app, //1
   this.tokenHelper = tokenHelper
   this.validationHandlers = validationHandlers
   this.otpHelper = otpHelperObj
+  this.emailHelper = emailHelper
+  this.registeredUserEmailTemplateName = registeredUserEmailTemplateName;
+  this.emailTemplateRepo = emailTemplateRepo;
 }
 
 router.prototype.initroutes = function() {
@@ -43,8 +49,14 @@ router.prototype.initroutes = function() {
   appMod.loadRoutes(apiRoute);
 
   let userMod = new userModule(this.app, this.userRepo, this.passport,
-    this.uuidGenerator, this.cryptoHelper,
-    this.userValidator, this.appUserRepo);
+                        this.uuidGenerator, 
+                        this.cryptoHelper,
+                        this.userValidator, 
+                        this.appUserRepo, 
+                        this.emailHelper, 
+                        this.registeredUserEmailTemplateName, 
+                        this.uuidGenerator, 
+                        this.emailTemplateRepo);
   userMod.loadRoutes(apiRoute);
 
   let tokenMod = new tokenModule(this.app,

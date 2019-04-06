@@ -27,6 +27,9 @@ const SELECT_OAUTH_TOKEN_BY_USERID_APPID_FOR_USER_TOKEN = 'Select * From oauth_t
 const SELECT_OAUTH_TOKEN_BY_USERID_APPID_FOR_APP_TOKEN = 'Select * From oauth_tokens Where AppId = ? and IsAppToken = 1'
 const INSERT_APP_TOKENS = 'INSERT INTO oauth_tokens Set ?'
 
+//app_email_template
+const SELECT_APP_EMAIL_BODY_BY_APPID_TEMPLATENAME = 'Select `Body`, `Subject` From app_email_template WHERE APPID = ? and TemplateName = ? and isActive = 1'
+
 module.exports = {
     query:{
         //Application
@@ -56,6 +59,9 @@ module.exports = {
         //OAuth_Tokens
         'SELECT_OAUTH_TOKEN_BY_USERID_APPID_FOR_USER_TOKEN': SELECT_OAUTH_TOKEN_BY_USERID_APPID_FOR_USER_TOKEN,
         'SELECT_OAUTH_TOKEN_BY_USERID_APPID_FOR_APP_TOKEN': SELECT_OAUTH_TOKEN_BY_USERID_APPID_FOR_APP_TOKEN,
-        'INSERT_APP_TOKENS': INSERT_APP_TOKENS
+        'INSERT_APP_TOKENS': INSERT_APP_TOKENS,
+
+        //app_email_template
+        'SELECT_APP_EMAIL_BODY_BY_APPID_TEMPLATENAME': SELECT_APP_EMAIL_BODY_BY_APPID_TEMPLATENAME
     }
 }

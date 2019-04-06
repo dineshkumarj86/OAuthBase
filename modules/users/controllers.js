@@ -1,4 +1,9 @@
-function usersController(userRepo, validator, appUserRepo) {
+function usersController(userRepo
+                        ,   validator 
+                        ,   emailHelper 
+                        ,   emailTemplateRepo
+                        ,   registeredUserMailTemplateName
+                        ,   uuidGenerator) {
   this.getUserByUserId = function(req, res, next) {
     if (!req.user) {
       res.status(401).send({
@@ -41,7 +46,8 @@ function usersController(userRepo, validator, appUserRepo) {
       UserId: req.UserId,
       Email: req.body.Email,
       PhoneNumber: req.body.Phone,
-      isActive: 1
+      isActive: 1,
+      ActivationToken: uuidGenerator.generateUUID()
     }
 
     const appUser = {
@@ -71,9 +77,18 @@ function usersController(userRepo, validator, appUserRepo) {
       console.log('Validation Success')
       var result = userRepo.insertUser(user, appUser)
       //check the result of the query
-      result.then(function(isSuccessful) {
+      result.then(async function(isSuccessful) {
         //if passed send 200 with data
         console.log('User Inserted')
+        let userInfo = {UserId: user.UserId, Email: user.Email, AppId: appUser.AppId}
+        // let userPublish = JSON.stringify(userInfo)
+        let templateDetails = await emailTemplateRepo.getEmailTemplate(appUser.AppId, registeredUserMailTemplateName, user.ActivationToken)
+        
+        // console.log(emailHelper)
+        // queueHelper.publishMessage(userPublish)
+        // emailHelper
+        console.log(`Email :- ${userInfo.Email}`)
+        emailHelper.sendEmail(userInfo.Email, templateDetails[0].Subject, templateDetails[0].Body)
         res.status(201).send({
           message: 'Insert Succeded'
         })

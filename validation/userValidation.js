@@ -16,7 +16,8 @@ class userValidation extends validate {
       UserId: this.schemalib.string().required(),
       Email: this.schemalib.string().required(),
       PhoneNumber: this.schemalib.string().required(),
-      isActive: this.schemalib.number().min(0).max(1)
+      isActive: this.schemalib.number().min(0).max(1),
+      ActivationToken: this.schemalib.string().required()
     });
   }
 
